@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Gerenciar Empresas </title>
+</head>
+<body>
+
+    <!-- A data de Demissão e o rendimento estão comentados porque voce precisa fazer uma tratativa com um "if" para não ocorrer um conflito por conta dos campos serem nulos -->
+
+    <h1> Lista de Funcionarios </h1>
+
+    <!-- O formulario para adicionar um funcionario -->
+    <form id = "funcionario-form"> 
+        
+        <label for = "nome_func"> Nome: </label>
+        <input type = "text" id = "nome_func" name = "nome_func" required />
+
+        <label for = "cpf_func"> CPF: </label>
+        <input type = "number" id = "cpf_func" name = "cpf_func" required />
+
+        <label for = "cargo_func"> Cargo: </label>
+        <input type = "text" id = "cargo_func" name = "cargo_func" required />
+
+        <label for = "datac_func"> Data de Contratação: </label>
+        <input type = "date" id = "datac_func" name = "datac_func" required />
+
+        <label for = "datad_func"> Data de Demissão: </label>
+        <input type = "date" id = "datad_func" name = "datad_func"/> 
+
+        <label for = "salario_func"> Salario: </label>
+        <input type = "number" id = "salario_func" name = "salario_func" required />
+
+        <label for = "redimento_func"> Rendimento: </label>
+        <input type = "text" id = "rendimento_func" name = "rendimento_func"/>
+        
+
+        <button type="submit" onclick=""> Adicionar Funcionario </button>
+
+    </form>
+    
+    <div id = "funcionarios-container"> 
+        <!-- Os funcionarios irão aparecer aqui -->
+    </div>
+
+
+    <script> 
+
+    /** Pega os dados do funcionario e exibe **/
+        async function carregarFuncionarios() {
+            const resposta = await fetch("http://localhost:3031/mostrar_funcionarios"); 
+            const funcionarios = await resposta.json();
+
+            const container = document.getElementById("funcionario-container");
+            container.innerHTML = ""; 
+
+            alunos.forEach((funcionario) => {
+                const FuncionarioDiv = document.createElement("div"); 
+
+                /** Lembrar de adicionar o campo de informações sobre a demissão do funcionario e do rendimento e fazer a tratativa de campo nulo **/
+
+                FuncionarioDiv.innerHTML = `
+                
+                <p> Nome: ${funcionario.nome_funcionario}, CPF: ${funcionario.cpf_funcionario}, Cargo: ${funcionario.cargo_funcionario}, Data de Contratação: ${funcionario.data_contratacao_funcionario} </p> 
+                <button onclick = "deletarFuncionario(${funcionario.id})"> Deletar </button> 
+                <button onclick = "editarFuncionario(${funcionario.id})"> Editar </button> 
+                
+                `; 
+                container.appendChild(FuncionarioDiv)
+            }); 
+        }
+
+
+        async function adicionarFuncionario(event) {
+            event.preventDefault(); 
+
+            let nome = document.getElementById("nome_func").value; 
+            let cpf = document.getElementById("cpf_func").value; 
+            let cargo = document.getElementById("cargo_func").value; 
+            let dataContrat = document.getElementById("datac_func").value;
+            let dataDemis = document.getElementById("datad_func").value 
+            let salario = document.getElementById("salario_func").value;
+            let rendimento = document.getElementById("rendimento_func").value;
+            
+
+            const resposta = await fetch(`http://localhost:3031/salvar_funcionario/${nome}/${cpf}/${cargo}/${dataContrat}/${dataDemis}/:salario/:rendimento_funcionario`)
+
+            if (resposta.ok) {
+                alert("Aluno criado com sucesso!"); 
+                carregarFuncionarios(); // Atualiza a lista de funcionarios após adicionar
+                document.getElementById("funcionario-form").reset(); // Limpa o formulario
+            } else {
+                alert("Erro ao criar aluno");
+            }
+        }
+
+
+        async function deletarFuncionario(id) {
+            const resposta = await fetch(`http://localhost:3031/deletar_funcionario/:${id}`);
+
+            if (resposta.ok) {
+                alert("Funcionario deletado com sucesso"); 
+                carregarFuncionarios(); 
+            } else {
+                alert("Erro ao deletar funcionario")
+            }
+        }
+
+
+        function editarFuncionario(id) {
+            window.location.href = `editar.html?id=${id}`
+        }
+
+        window.onload = carregarFuncionarios; 
+
+        document.getElementById("funcionario-form").addEventListener("submit", adicionarFuncionario); 
+    </script>
+    
+</body>
+</html>
