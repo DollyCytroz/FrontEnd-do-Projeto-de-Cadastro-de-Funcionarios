@@ -1,0 +1,65 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin-top: 30px;
+}
+
+h1, h4 {
+    font-family: 'Arial', sans-serif;
+}
+
+.card {
+    border: none;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-body {
+    font-size: 1rem;
+}
+
+button {
+    margin-top: 10px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+form {
+    background-color: #ffffff;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.btn {
+    padding: 12px;
+    font-size: 1.2rem;
+}
+
+#funcionarios-container {
+    margin-top: 30px;
+}
+
+.card-body p {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+    .form-row {
+        flex-direction: column;
+    }
+    .form-row .col-md-6 {
+        max-width: 100%;
+    }
+}

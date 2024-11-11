@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Funcionário</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="editar.css">
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <h1 class="text-center text-primary mb-4">Editar Funcionário</h1>
+
+        <!-- Formulário para editar funcionário -->
+        <div class="card shadow-lg p-4">
+            <h4 class="card-title text-center text-success mb-3">Preencha os dados do funcionário</h4>
+            <form id="editar-funcionario-form">
+                <div class="form-group">
+                    <label for="nomefunc">Nome:</label>
+                    <input type="text" id="nomefunc" name="nomefunc" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="cpffunc">CPF:</label>
+                    <input type="text" id="cpffunc" name="cpffunc" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="cargofunc">Cargo:</label>
+                    <input type="text" id="cargofunc" name="cargofunc" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="datacfunc">Data de Contratação:</label>
+                    <input type="date" id="datacfunc" name="datacfunc" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="datadfunc">Data de Demissão:</label>
+                    <input type="date" id="datadfunc" name="datadfunc" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="salariofunc">Salário:</label>
+                    <input type="number" id="salariofunc" name="salariofunc" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="rendimentofunc">Rendimento:</label>
+                    <input type="number" id="rendimentofunc" name="rendimentofunc" class="form-control" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        async function carregarFuncionario() {
+            const urlParams = new URLSearchParams(window.location.search); 
+            const id = urlParams.get("id");
+
+            const resposta = await fetch(`http://localhost:3031/mostrar_funcionarios`);
+            const funcionarios = await resposta.json();
+
+            const funcionario = funcionarios.find((funcionario) => funcionario.id == id);
+
+            if (funcionario) {
+                document.getElementById("nomefunc").value = funcionario.nome_funcionario;
+                document.getElementById("cpffunc").value = funcionario.cpf_funcionario;
+                document.getElementById("cargofunc").value = funcionario.cargo_funcionario;
+                
+                const dataContratacao = funcionario.data_contratacao_funcionario;
+                const dataFormatadaContratacao = dataContratacao ? dataContratacao.split('T')[0] : '';  
+                document.getElementById("datacfunc").value = dataFormatadaContratacao;
+
+                document.getElementById("datadfunc").value = funcionario.data_demissao_funcionario ? funcionario.data_demissao_funcionario.split('T')[0] : ''; 
+                document.getElementById("salariofunc").value = funcionario.salario;
+                document.getElementById("rendimentofunc").value = funcionario.rendimento_funcionario || ''; 
+            } else {
+                alert("Funcionário não encontrado.");
+                window.location.href = "index.html";
+            }
+        }
+
+        async function salvarAlteracoes(event) {
+            event.preventDefault(); 
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get("id");
+
+            const nome = document.getElementById("nomefunc").value;
+            const cpf = document.getElementById("cpffunc").value; 
+            const cargo = document.getElementById("cargofunc").value; 
+            const datacontrat = document.getElementById("datacfunc").value; 
+            const datademis = document.getElementById("datadfunc").value;   
+            const salario = document.getElementById("salariofunc").value; 
+            const rendimento = document.getElementById("rendimentofunc").value; 
+
+            const dataDemissao = datademis ? datademis : "null"; 
+
+            const resposta = await fetch(`http://localhost:3031/editarFuncionarios/${id}/${nome}/${cpf}/${cargo}/${datacontrat}/${dataDemissao}/${salario}/${rendimento}`, {
+                method: 'GET' 
+            });
+
+            if (resposta.ok) {
+                alert("Funcionário atualizado com sucesso!"); 
+                window.location.href = "index.html";
+            } else {
+                alert("Erro ao atualizar funcionário.");
+            }
+        }
+
+        window.onload = carregarFuncionario;
+
+        document.getElementById("editar-funcionario-form").addEventListener("submit", salvarAlteracoes); 
+    </script>
+
+</body>
+</html>
