@@ -1,0 +1,55 @@
+/* Estilos personalizados para a página */
+body {
+    background-color: #f8f9fa; /* Cor de fundo clara */
+    background-image: url(48608028-borrado-escritorio-fundo-com-moderno-mobilia-e-suave-iluminacao-criando-uma-profissional-e-calma-area-de-trabalho-meio-ambiente-gratis-foto.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.card {
+    border-radius: 15px; /* Bordas arredondadas para o cartão */
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+form .form-control {
+    border-radius: 10px; /* Borda arredondada para os campos de entrada */
+    padding: 15px;
+}
+
+button {
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+}
+
+.container {
+    padding: 20px;
+}
+
+/* Estilos adicionais para tornar o formulário mais elegante */
+.card.shadow-lg {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+h1 {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+h4 {
+    font-size: 1.25rem;
+    color: #28a745;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+button:active {
+    background-color: #1e7e34;
+}

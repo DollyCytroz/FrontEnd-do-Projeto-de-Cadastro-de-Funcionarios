@@ -10,11 +10,12 @@
 <body class="bg-light">
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4 text-primary">Lista de Funcionários</h1>
+        <h1 id="titulo-empresa" class="text-center mb-4 text-primary fonte">Lista de Funcionários</h1>
+
 
         <!-- Formulário para adicionar um funcionário -->
         <div class="card shadow-lg p-4 mb-4">
-            <h4 class="card-title text-center text-success mb-3">Adicionar Funcionário</h4>
+            <h4 class="card-title text-center text-primary-emphasis mb-3">Adicionar Funcionário</h4>
             <form id="funcionario-form">
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
@@ -56,7 +57,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success w-100">Adicionar Funcionário</button>
+                <button type="submit" class="btn btn-info w-100">Adicionar Funcionário</button>
             </form>
         </div>
 
@@ -72,6 +73,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script> 
+
+
+    //** Pega as informações do banco de dados e as exibe para o codigo, as armazenando em uma variavel **//
+
         async function carregarFuncionarios() {
             const resposta = await fetch("http://localhost:3031/mostrar_funcionarios"); 
             const funcionarios = await resposta.json();
@@ -101,6 +106,9 @@
             }); 
         }
 
+
+        //** Adiciona um novo funcionario criando variaveis para cada campo a serem preenchidas, depois de preenchidas essas variaveis irão ser mandadas para os parametros de get e serão exibidas **//
+
         async function adicionarFuncionario(event) {
             event.preventDefault(); 
 
@@ -123,6 +131,8 @@
             }
         }
 
+
+        //** Deleta os funcionarios atráves do ID **//
         async function deletarFuncionario(id) {
             const resposta = await fetch(`http://localhost:3031/deletar_funcionario/${id}`);
 
@@ -141,6 +151,15 @@
         window.onload = carregarFuncionarios; 
 
         document.getElementById("funcionario-form").addEventListener("submit", adicionarFuncionario); 
+
+        // Recupera o nome da empresa do Local Storage
+const nomeEmpresa = localStorage.getItem("nomeEmpresa");
+
+// Atualiza o título com o nome da empresa, se disponível
+if (nomeEmpresa) {
+    document.getElementById("titulo-empresa").textContent = `Funcionários de ${nomeEmpresa}`;
+}
+
     </script>
 
 </body>

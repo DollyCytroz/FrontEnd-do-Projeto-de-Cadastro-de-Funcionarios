@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Empresas</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="empresa.css"> 
+</head>
+<body class="bg-light">
+
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card shadow-lg p-4" style="max-width: 500px; width: 100%;">
+            <h4 class="card-title text-center text-primary mb-3">Cadastrar Empresa</h4>
+            <form id="empresa-form">
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label for="nome_empre">Nome da Empresa</label>
+                        <input type="text" class="form-control" id="nome_empre" name="nome_empre" required />
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="cnpj_empre">CNPJ</label>
+                        <input type="text" class="form-control" id="cnpj_empre" name="cnpj_empre" required />
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="numdepar_empre">Número de Departamentos</label>
+                        <input type="number" class="form-control" id="numdepar_empre" name="numdepar_empre" required />
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="endereco_empre">Endereço</label>
+                        <input type="text" class="form-control" id="endereco_empre" name="endereco_empre" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-primary w-100">Cadastrar Empresa</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts do Bootstrap e jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Função para adicionar empresa
+        async function adicionarEmpresa(event) {
+            event.preventDefault(); 
+
+            let nome = document.getElementById("nome_empre").value; 
+            let cnpj = document.getElementById("cnpj_empre").value; 
+            let endereco = document.getElementById("endereco_empre").value; 
+            let num_departamentos = document.getElementById("numdepar_empre").value;
+
+            // Corrigindo a URL da requisição fetch
+            const resposta = await fetch(`http://localhost:3031/salvar_empresa/empresa/${nome}/${endereco}/${cnpj}/${num_departamentos}`);
+
+            if (resposta.ok) {
+                alert("Empresa cadastrada com sucesso!"); 
+
+                // Pega a variável do nome e armazena no localStorage
+                localStorage.setItem("nomeEmpresa", nome);
+
+                document.getElementById("empresa-form").reset(); // Limpa o formulário
+
+                // Redireciona para o index.html
+                window.location.href = "index.html";
+            } else {
+                alert("Erro ao criar empresa");
+            }
+        }
+
+        document.getElementById("empresa-form").addEventListener("submit", adicionarEmpresa);
+    </script> 
+
+</body>
+</html>
