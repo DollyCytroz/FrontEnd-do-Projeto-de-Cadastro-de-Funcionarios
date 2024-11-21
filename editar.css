@@ -1,6 +1,10 @@
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
+    background-image: url(48608028-borrado-escritorio-fundo-com-moderno-mobilia-e-suave-iluminacao-criando-uma-profissional-e-calma-area-de-trabalho-meio-ambiente-gratis-foto.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .container {

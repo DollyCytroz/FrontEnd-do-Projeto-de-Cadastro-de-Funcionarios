@@ -6,11 +6,18 @@
     <title>Gerenciar Funcionários</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
 </head>
 <body class="bg-light">
 
     <div class="container mt-5">
-        <h1 id="titulo-empresa" class="text-center mb-4 text-primary fonte">Lista de Funcionários</h1>
+
+        <div class="titulo">
+            <h1 id="titulo-empresa" class="fonte">Lista de Funcionários</h1>
+        </div>
 
 
         <!-- Formulário para adicionar um funcionário -->
@@ -57,12 +64,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-info w-100">Adicionar Funcionário</button>
+                <button type="submit" class="btn btn-primary w-100 butão">Adicionar Funcionário</button>
             </form>
         </div>
 
         <!-- Lista de Funcionários -->
-        <div id="funcionarios-container" class="bg-white p-4 shadow-sm rounded">
+        <div id="funcionarios-container" class="bg-white p-4 shadow-sm rounded funcionarios">
             <h4 class="text-center text-info mb-3">Funcionários Cadastrados</h4>
             <!-- A lista de funcionários será inserida aqui pelo JavaScript -->
         </div>
@@ -111,6 +118,7 @@
 
         async function adicionarFuncionario(event) {
             event.preventDefault(); 
+            document.getElementById(funcionarios-container).style.display = flex; 
 
             let nome = document.getElementById("nome_func").value; 
             let cpf = document.getElementById("cpf_func").value; 
@@ -134,14 +142,7 @@
 
         //** Deleta os funcionarios atráves do ID **//
         async function deletarFuncionario(id) {
-            const resposta = await fetch(`http://localhost:3031/deletar_funcionario/${id}`);
-
-            if (resposta.ok) {
-                alert("Funcionário deletado com sucesso"); 
-                carregarFuncionarios(); 
-            } else {
-                alert("Erro ao deletar funcionário");
-            }
+            window.location.href = `deletar.html?id=${id}`;
         }
 
         function editarFuncionario(id) {
