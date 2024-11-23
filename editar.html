@@ -99,8 +99,9 @@
 
             const dataDemissao = datademis ? datademis : "null"; 
 
+            // Corrigido: O método ainda será 'GET', mas os dados são passados na URL
             const resposta = await fetch(`http://localhost:3031/editarFuncionarios/${id}/${nome}/${cpf}/${cargo}/${datacontrat}/${dataDemissao}/${salario}/${rendimento}`, {
-                method: 'GET' 
+                method: 'GET' // Mantendo o método 'GET'
             });
 
             if (resposta.ok) {

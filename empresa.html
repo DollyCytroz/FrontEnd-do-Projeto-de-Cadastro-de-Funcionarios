@@ -50,7 +50,6 @@
             let endereco = document.getElementById("endereco_empre").value; 
             let num_departamentos = document.getElementById("numdepar_empre").value;
 
-            // Corrigindo a URL da requisição fetch
             const resposta = await fetch(`http://localhost:3031/salvar_empresa/empresa/${nome}/${endereco}/${cnpj}/${num_departamentos}`);
 
             if (resposta.ok) {

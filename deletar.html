@@ -20,7 +20,7 @@
 <div class="container">
     <div class="text-center">
         <h3>Você tem certeza que deseja excluir este funcionário?</h3>
-        <p id="nome-funcionario"></p>
+        <p id="nome-funcionario">Carregando...</p>
         <button onclick="confirmarExclusao()" id="confirmar-btn" class="btn btn-danger">Confirmar Exclusão</button>
         <a href="index.html" class="btn btn-secondary">Cancelar</a>
     </div>
@@ -56,7 +56,7 @@
         // Se o usuário confirmar, realiza a exclusão
         document.getElementById('confirmar-btn').onclick = async function() {
             const respostaDeletar = await fetch(`http://localhost:3031/deletar_funcionario/${id}`, { 
-                method: 'DELETE' 
+                method: 'DELETE' // Corrigido para DELETE
             });
 
             if (respostaDeletar.ok) {
@@ -69,7 +69,7 @@
     }
 
     // Chama a função de confirmação de exclusão ao carregar a página
-   
+    window.onload = confirmarExclusao;
 </script>
 
 </body>
